@@ -1,36 +1,40 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*"%>
+<%-- <%response.setHeader("X-UA-Compatible","IE=edge"); %> --%>
+<c:set var="webRoot" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 <html> 
 <head>
 
 <%
-String path = request.getContextPath();
-String getServletPath = request.getServletPath().toString();//		/main.do
-String defaultLayout = getServletPath.replace("/", "").replace(".do", "");
+
+ArrayList<Object> memberList = (ArrayList)request.getAttribute("memberList");
+
 %>
 
-
-<script
-  src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="${webRoot}/common/js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="${webRoot}/common/js/jquery/jquery.form.min.js"></script>
+<!-- <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/memberList.js"></script>
-
-<% 
-%>
-
+<script>
+	var app = angular.module('app',[]);
+	app.controller('memberList',function($scope){
+		$scope.memberList = <%= memberList %>;
+	})
+</script>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body> 
-<div ng-app="myApp" ng-controller="memberList">
+<div data-ng-app="app" data-ng-controller="memberList">
 	
 	<script type="text/javascript">
-	$scope.memberList = <% request.getAttribute("memberList"); %>
+	
 	</script>
 	<h1>회원관리</h1>
 	<div>
@@ -45,7 +49,7 @@ String defaultLayout = getServletPath.replace("/", "").replace(".do", "");
 				<th>나이</th>
 				<th>잔여회비</th>
 			</tr>
-			<tr ng-repeat="item in memberList">
+			<tr data-ng-repeat="item in memberList">
 				<td>{{item.memberNo}}</td>
 				<td>{{item.memberNm}}</td>
 				<td>{{item.attCnt}}</td>

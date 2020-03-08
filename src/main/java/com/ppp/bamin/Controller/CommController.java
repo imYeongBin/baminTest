@@ -1,5 +1,7 @@
 package com.ppp.bamin.Controller;
 
+import java.util.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
@@ -21,32 +23,31 @@ public class CommController {
 	
 	private final static String CLIENT_JS = "clientJs";
 	private final static String URI_INDEXOF_TXT = ".do";
-	@RequestMapping("/**/**")  
-	public String main(HttpServletRequest request, Model model) {
-		String retVal = "defaultLayout";
-		
-		int paramIdx = request.getRequestURI().indexOf(URI_INDEXOF_TXT);
-		//String requestURIPath = request.getRequestURI().substring(0, paramIdx);
-		//System.out.println("requestURIPath : "+requestURIPath);
-		
-		//String getRequestURI = request.getRequestURI();		//  /bamin/main.do
-		String getContextPath = request.getContextPath();//		/bamin
-		System.out.println("getContextPath : "+getContextPath);
-		
-		String getServletPath = request.getServletPath().toString();//		/main.do
-		System.out.println("getServletPath : "+getServletPath);
-
-		int idx = getServletPath.indexOf(URI_INDEXOF_TXT);
-		String jsPath = getServletPath.substring(0,idx);
-		jsPath = "default/app/js"+jsPath+".js";
-		System.out.println("jsPath : "+jsPath);
-
-		model.addAttribute("clientJs",jsPath);
-		
-		
-		return retVal;
-	}
-	
+	//@RequestMapping("/**/**")  
+	/*
+	 * public String main(HttpServletRequest request, Model model) { String retVal =
+	 * "defaultLayout";
+	 * 
+	 * int paramIdx = request.getRequestURI().indexOf(URI_INDEXOF_TXT); //String
+	 * requestURIPath = request.getRequestURI().substring(0, paramIdx);
+	 * //System.out.println("requestURIPath : "+requestURIPath);
+	 * 
+	 * //String getRequestURI = request.getRequestURI(); // /bamin/main.do String
+	 * getContextPath = request.getContextPath();// /bamin
+	 * System.out.println("getContextPath : "+getContextPath);
+	 * 
+	 * String getServletPath = request.getServletPath().toString();// /main.do
+	 * System.out.println("getServletPath : "+getServletPath);
+	 * 
+	 * int idx = getServletPath.indexOf(URI_INDEXOF_TXT); String jsPath =
+	 * getServletPath.substring(0,idx); jsPath = "default/app/js"+jsPath+".js";
+	 * System.out.println("jsPath : "+jsPath);
+	 * 
+	 * model.addAttribute("clientJs",jsPath);
+	 * 
+	 * 
+	 * return retVal; }
+	 */
 	
 	
 	
@@ -68,13 +69,13 @@ public class CommController {
 	
 	
 	
-	@RequestMapping("/main1.do")
+	@RequestMapping("/main.do")
 	public String main1(HttpServletRequest request, Model model) {
 		
 		//String getRequestURI = request.getRequestURI();		//  /namin/main.do
 		//String getContextPath = request.getContextPath();//		/bamin
-		String getServletPath = request.getServletPath().toString();//		/main.do
-		String defaultLayout = getServletPath.replace("/", "").replace(".do", "");
+//		String getServletPath = request.getServletPath().toString();//		/main.do
+//		String defaultLayout = getServletPath.replace("/", "").replace(".do", "");
 //		System.out.println("##### getRequestURI ##### : "+getRequestURI);
 //		System.out.println("##### getRequestURI ##### : "+getContextPath);
 //		System.out.println("##### getRequestURI ##### : "+getServletPath);
@@ -89,7 +90,10 @@ public class CommController {
 		
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		
-		model.addAttribute("memberList", mapper.memberList());
+		System.out.println("#####");
+		System.out.println(mapper.memberList());//[{lctn=강서구, gndr=M, MEMBERNM=임영빈, ATTCNT=0, MEMBERNO=1, TELNO=01041993679, FEEBALANCE=0, age=32}]
+		ArrayList<Map<String, Object>> memberList = mapper.memberList();
+		model.addAttribute("memberList", memberList);
 		
 		return "memberList";
 	}	

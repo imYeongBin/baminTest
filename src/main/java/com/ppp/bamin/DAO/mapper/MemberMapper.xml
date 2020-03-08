@@ -18,14 +18,7 @@
     
     <select id="memberList" resultMap="selectMap">
    	SELECT
-   	MEMBERNO AS MEMBER_NO
-   	,MEMBERNM AS MEMBER_NM
-   	,ATTCNT AS ATT_CNT
-   	,TELNO AS TEL_NO
-   	,LCTN AS LCTN
-   	,GNDR AS GNDR
-   	,AGE AS AGE
-   	,FEEBALANCE AS FEE_BALANCE
+	*
    	FROM MEMBER
     </select>
     

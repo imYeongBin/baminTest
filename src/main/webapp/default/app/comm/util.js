@@ -1,6 +1,5 @@
-(function(angular, mz) {
+(function() {
 	
-	mz.core.factory('util', mz.mold(function(layerPop) {
 		var o = {};
 		
 		//�대��� �곗냽踰덊샇 �ㅻ쪟 DATA
@@ -740,6 +739,5 @@
 		
 		
 		return o;
-	}));
 	
-})(angular, mz);
+});
